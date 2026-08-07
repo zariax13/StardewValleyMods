@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ExcaliburScarecrow;
+
+/// <summary>
+/// Configuración del mod editable desde Generic Mod Config Menu (GMCM) o config.json.
+/// </summary>
+public sealed class ModConfig
+{
+    /// <summary>
+    /// Radio de alcance en casillas para el regado y protección de cultivos (por defecto 17 casillas).
+    /// </summary>
+    public int WaterRadius { get; set; } = 17;
+
+    /// <summary>
+    /// Índice del sprite de la espada en la hoja de texturas (0 para la 1ra espada, 1 para la 2da espada).
+    /// </summary>
+    public int SpriteIndex { get; set; } = 0;
+
+    /// <summary>
+    /// Velocidad de propagación de cada ola en segundos (por defecto 0.5 segundos).
+    /// </summary>
+    public float WaveSpeedSeconds { get; set; } = 0.5f;
+}

@@ -1,0 +1,29 @@
+{
+  "SwordScarecrow_Sword": {
+    "Name": "ExcaliburScarecrow_Excalibur",
+
+    "DisplayName": "{{i18n:item.name}}",
+    "Description": "{{i18n:item.description}}",
+
+    "Texture": "Mods/ExcaliburScarecrow/bigcraftables",
+    "SpriteIndex": 0,
+
+    "Price": 0,
+
+    "Fragility": 0,
+    "CanBePlacedIndoors": true,
+    "CanBePlacedOutdoors": true,
+    "IsLamp": true,
+
+    "ContextTags": [
+      "crow_scare",
+      "sword_scarecrow",
+      "ss_water",
+      "ss_light",
+      "ss_particles",
+      "ss_blessing"
+    ],
+
+    "LightSourceRadius": 6
+  }
+}

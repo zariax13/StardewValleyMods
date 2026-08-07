@@ -1,0 +1,29 @@
+{
+  /*********
+    ** Item
+    *********/
+
+  "item.name": "Excalibur",
+  "item.description": "A legendary sword embedded in the ground. It protects nearby crops and waters them every morning.",
+
+  /*********
+    ** Mail
+    *********/
+
+  "mail.intro": "Greetings, @.^I discovered a legendary sword embedded in the earth. It seems to possess mysterious power... Perhaps it will protect your crops better than an ordinary scarecrow.^Take good care of it.^- An unknown traveler%item id (BC)ExcaliburScarecrow_Excalibur 1 %%[#]A forgotten legend",
+
+  /*********
+    ** Generic Mod Config Menu
+    *********/
+
+  "config.title": "Excalibur Scarecrow",
+
+  "config.water-radius.name": "Water Radius",
+  "config.water-radius.tooltip": "Tiles affected around the Excalibur. Default {{defaultValue}}.",
+
+  "config.sprite.name": "Sword Appearance",
+  "config.sprite.tooltip": "Select the sprite used by the Excalibur.",
+
+  "config.wave-speed.name": "Wave Speed",
+  "config.wave-speed.tooltip": "Seconds between each watering wave."
+}

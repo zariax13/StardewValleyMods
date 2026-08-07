@@ -1,0 +1,10 @@
+{
+  "Name": "Excalibur Scarecrow",
+  "Author": "zariax13",
+  "Version": "1.0.0",
+  "Description": "A legendary sword that protects and waters nearby crops.",
+  "UniqueID": "zariax13.ExcaliburScarecrow",
+  "EntryDll": "ExcaliburScarecrow.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": []
+}
