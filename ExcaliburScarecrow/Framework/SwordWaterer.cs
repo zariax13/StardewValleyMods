@@ -398,6 +398,16 @@ internal sealed class SwordWaterer
                 ));
             }
 
+            //// Efecto de brillo constante alrededor de la espada
+            //Location.temporarySprites.Add(new TemporaryAnimatedSprite(
+            //    "Mods/ExcaliburScarecrow/bigcraftables",  // Tu textura
+            //    new Rectangle(0, 0, 16, 16),              // Sprite de brillo
+            //    swordPixelPos - new Vector2(8, 8),
+            //    false,
+            //    0f,
+            //    Color.Gold
+            //));
+
             CurrentRingIndex++;
             return CurrentRingIndex < Rings.Count;
         }

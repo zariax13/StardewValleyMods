@@ -8,7 +8,7 @@ using ExcaliburScarecrow.Integrations;
 
 namespace ExcaliburScarecrow;
 /// <summary>
-/// Punto de entrada del mod SwordScarecrow.
+/// Punto de entrada del mod ExcaliburScarecrow.
 /// </summary>
 internal sealed class ModEntry : Mod
 {
@@ -50,31 +50,84 @@ internal sealed class ModEntry : Mod
 
     private void OnAssetRequested(object? sender, AssetRequestedEventArgs e)
     {
-        // 1. Modificar Data/BigCraftables con nuestro objeto personalizado, el SpriteIndex activo y el Radio dinámico
+        // 1. Registrar nuestro Big Craftable personalizado.
         if (e.NameWithoutLocale.IsEquivalentTo(ModConstants.GameBigCraftables))
         {
             e.Edit(asset =>
             {
                 var data = asset.AsDictionary<string, BigCraftableData>().Data;
-                var customData = Helper.ModContent.Load<Dictionary<string, BigCraftableData>>(ModConstants.BigCraftablesJsonPath);
 
-                foreach (var kvp in customData)
+                data[ModConstants.SwordItemId] = new BigCraftableData
                 {
-                    kvp.Value.SpriteIndex = config.SpriteIndex;
+                    Name = ModConstants.SwordItemId,
 
-                    // Actualizar dinámicamente los tags de radio de espantapájaros y regado
-                    if (kvp.Value.ContextTags != null)
-                    {
-                        kvp.Value.ContextTags.RemoveAll(tag => tag.StartsWith("crow_scare_radius_") || tag.StartsWith("ss_water_radius_"));
-                        kvp.Value.ContextTags.Add($"crow_scare_radius_{config.WaterRadius}");
-                        kvp.Value.ContextTags.Add($"ss_water_radius_{config.WaterRadius}");
-                    }
+                    DisplayName = Helper.Translation.Get("item.name").ToString(),
+                    Description = Helper.Translation.Get("item.description").ToString(),
 
-                    data[kvp.Key] = kvp.Value;
-                }
+                    Texture = ModConstants.TextureAssetKey,
+                    SpriteIndex = config.SpriteIndex,
+
+                    Price = 0,
+
+                    Fragility = 0,
+
+                    CanBePlacedIndoors = true,
+                    CanBePlacedOutdoors = true,
+
+                    IsLamp = true,
+
+                    ContextTags =
+                    [
+                        "crow_scare",
+                        $"crow_scare_radius_{config.WaterRadius}",
+                        "excalibur_scarecrow",
+
+                        "ss_water",
+                        $"ss_water_radius_{config.WaterRadius}",
+
+                        "ss_light",
+                        "ss_light_radius_6",
+
+                        "ss_particles",
+                        "ss_blessing"
+                    ]
+                };
             });
+
             return;
         }
+
+        // 1. Modificar Data/BigCraftables con nuestro objeto personalizado, el SpriteIndex activo y el Radio dinámico
+        //if (e.NameWithoutLocale.IsEquivalentTo(ModConstants.GameBigCraftables))
+        //{
+        //    e.Edit(asset =>
+        //    {
+        //        var data = asset.AsDictionary<string, BigCraftableData>().Data;
+
+        //        // temporal log
+        //        Monitor.Log(
+        //    $"Registrando Excalibur: {data.ContainsKey(ModConstants.SwordItemId)}",
+        //    LogLevel.Info);
+
+        //        var customData = Helper.ModContent.Load<Dictionary<string, BigCraftableData>>(ModConstants.BigCraftablesJsonPath);
+
+        //        foreach (var kvp in customData)
+        //        {
+        //            kvp.Value.SpriteIndex = config.SpriteIndex;
+
+        //            // Actualizar dinámicamente los tags de radio de espantapájaros y regado
+        //            if (kvp.Value.ContextTags != null)
+        //            {
+        //                kvp.Value.ContextTags.RemoveAll(tag => tag.StartsWith("crow_scare_radius_") || tag.StartsWith("ss_water_radius_"));
+        //                kvp.Value.ContextTags.Add($"crow_scare_radius_{config.WaterRadius}");
+        //                kvp.Value.ContextTags.Add($"ss_water_radius_{config.WaterRadius}");
+        //            }
+
+        //            data[kvp.Key] = kvp.Value;
+        //        }
+        //    });
+        //    return;
+        //}
 
         // 2. Modificar Data/Mail con nuestra carta de introducción
         if (e.NameWithoutLocale.IsEquivalentTo(ModConstants.GameMail))
@@ -82,13 +135,11 @@ internal sealed class ModEntry : Mod
             e.Edit(asset =>
             {
                 var data = asset.AsDictionary<string, string>().Data;
-                var customMail = Helper.ModContent.Load<Dictionary<string, string>>(ModConstants.MailJsonPath);
 
-                foreach (var kvp in customMail)
-                {
-                    data[kvp.Key] = kvp.Value;
-                }
+                data[ModConstants.IntroMailId] =
+                    Helper.Translation.Get("mail.intro").ToString();
             });
+
             return;
         }
 
@@ -106,7 +157,7 @@ internal sealed class ModEntry : Mod
         if (!Game1.player.hasOrWillReceiveMail(ModConstants.IntroMailId))
         {
             Game1.player.mailbox.Add(ModConstants.IntroMailId);
-            Monitor.Log("Carta del mod SwordScarecrow agregada al buzón del jugador.", LogLevel.Info);
+            Monitor.Log("Carta del mod ExcaliburScarecrow agregada al buzón del jugador.", LogLevel.Info);
         }
 
         swordWaterer.ResetDailyState();

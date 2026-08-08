@@ -45,15 +45,15 @@ internal sealed class GenericModConfigMenuIntegration
 
         configMenu.AddSectionTitle(
             mod: manifest,
-            text: () => "Ajustes de la Espada Espantapájaros"
+            text: () => helper.Translation.Get("config.title").ToString()
         );
 
         configMenu.AddNumberOption(
             mod: manifest,
             getValue: () => config.WaterRadius,
             setValue: value => config.WaterRadius = value,
-            name: () => "Radio de Regado / Protección",
-            tooltip: () => "Número de casillas a la redonda que la espada regará y protegerá.",
+            name: () => helper.Translation.Get("config.water-radius.name").ToString(),
+            tooltip: () => helper.Translation.Get("config.water-radius.tooltip").ToString(),
             min: 1,
             max: 30,
             interval: 1
@@ -63,8 +63,8 @@ internal sealed class GenericModConfigMenuIntegration
             mod: manifest,
             getValue: () => config.SpriteIndex,
             setValue: value => config.SpriteIndex = value,
-            name: () => "Diseño de Espada",
-            tooltip: () => "Sprite usado por la espada.",
+            name: () => helper.Translation.Get("config.sprite-index.name").ToString(),
+            tooltip: () => helper.Translation.Get("config.sprite-index.tooltip").ToString(),
             min: 0,
             max: 10,
             interval: 1
@@ -74,8 +74,8 @@ internal sealed class GenericModConfigMenuIntegration
             mod: manifest,
             getValue: () => config.WaveSpeedSeconds,
             setValue: value => config.WaveSpeedSeconds = value,
-            name: () => "Velocidad de Olas",
-            tooltip: () => "Segundos entre cada ola de regado.",
+            name: () => helper.Translation.Get("config.wave-speed.name").ToString(),
+            tooltip: () => helper.Translation.Get("config.wave-speed.tooltip").ToString(),
             min: 0.1f,
             max: 2.0f,
             interval: 0.1f
@@ -84,7 +84,7 @@ internal sealed class GenericModConfigMenuIntegration
 
     private void Reset()
     {
-        config.WaterRadius = 17;
+        config.WaterRadius = 5;
         config.SpriteIndex = 0;
         config.WaveSpeedSeconds = 0.5f;
 

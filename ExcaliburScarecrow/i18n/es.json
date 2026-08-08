@@ -1,0 +1,41 @@
+{
+  /*********
+    ** Item
+    *********/
+
+  "item.name": "Excalibur",
+  "item.description": "Una espada antigua clavada en la tierra.",
+
+  /*********
+    ** Mail
+    *********/
+
+  "mail.intro": "Saludos, @.^Encontré una espada antigua clavada en la tierra. Tal vez pueda proteger tus cultivos mejor que un espantapájaros común.^Espero que te sea útil.^- Un viajero desconocido%item id (BC)ExcaliburScarecrow_Excalibur 1 %%[#]Una espada olvidada",
+
+  /*********
+    ** Generic Mod Config Menu
+    *********/
+
+  "config.title": "Ajustes de Excalibur Scarecrow",
+
+  "config.water-radius.name": "Radio de Regado / Protección",
+  "config.water-radius.tooltip": "Número de casillas alrededor de la espada que serán regadas y protegidas contra los cuervos.",
+
+  "config.sprite-index.name": "Diseño de Espada",
+  "config.sprite-index.tooltip": "Sprite utilizado por la espada.",
+
+  "config.wave-speed.name": "Intervalo entre Olas",
+  "config.wave-speed.tooltip": "Segundos entre cada ola de regado."
+
+  //"config.title": "Excalibur Scarecrow",
+
+  //"config.water-radius.name": "Water Radius",
+  //"config.water-radius.tooltip": "Tiles affected around the Excalibur. Default {{defaultValue}}.",
+
+  //"config.sprite.name": "Sword Appearance",
+  //"config.sprite.tooltip": "Select the sprite used by the Excalibur.",
+
+  //"config.wave-speed.name": "Wave Speed",
+  //"config.wave-speed.tooltip": "Seconds between each watering wave.",
+
+}

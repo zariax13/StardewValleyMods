@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
   <Gamepath>D:\SteamLibrary\steamapps\common\Stardew Valley</Gamepath>  
   <LangVersion>12.0</LangVersion>  
+  <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,10 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="assets\BigCraftables.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="assets\Mail.json">
+    <None Update="assets\bigcraftables.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="i18n\default.json">
