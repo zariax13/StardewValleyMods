@@ -80,6 +80,14 @@ internal sealed class GenericModConfigMenuIntegration
             max: 2.0f,
             interval: 0.1f
         );
+
+        configMenu.AddBoolOption(
+            mod: manifest,
+            getValue: () => config.ParticlesAlwaysActive,
+            setValue: value => config.ParticlesAlwaysActive = value,
+            name: () => helper.Translation.Get("config.particles-always-active.name"),
+            tooltip: () => helper.Translation.Get("config.particles-always-active.tooltip")
+        );
     }
 
     private void Reset()
@@ -87,6 +95,7 @@ internal sealed class GenericModConfigMenuIntegration
         config.WaterRadius = 5;
         config.SpriteIndex = 0;
         config.WaveSpeedSeconds = 0.5f;
+        config.ParticlesAlwaysActive = false;
 
         applyConfig();
     }

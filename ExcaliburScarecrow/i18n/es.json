@@ -1,20 +1,20 @@
 {
   /*********
-    ** Item
-    *********/
+  ** Item
+  *********/
 
   "item.name": "Excalibur",
-  "item.description": "Una espada antigua clavada en la tierra.",
+  "item.description": "Una espada legendaria clavada en la tierra. Protege los cultivos cercanos y los riega cada mañana.",
 
   /*********
-    ** Mail
-    *********/
+  ** Mail
+  *********/
 
-  "mail.intro": "Saludos, @.^Encontré una espada antigua clavada en la tierra. Tal vez pueda proteger tus cultivos mejor que un espantapájaros común.^Espero que te sea útil.^- Un viajero desconocido%item id (BC)ExcaliburScarecrow_Excalibur 1 %%[#]Una espada olvidada",
+  "mail.intro": "Saludos, @.^Te escribo porque he hecho un descubrimiento bastante... peculiar en las minas.^Es una espada. Pero no una espada cualquiera. Esta vibra con una magia ancestral que incluso yo, después de todos mis años de estudio, no puedo descifrar por completo. La hoja resuena con el eco del espíritu de un héroe olvidado, esperando ser despertado.^Me encantaría quedármela en mi torre, pero la energía mágica allí ya es peligrosamente inestable. Temo que la presencia de la espada pueda invocar inadvertidamente a algo... o a alguien. Lo último que necesito es que un espíritu heroico se materialice en mi estudio exigiendo un Santo Grial. Ya tengo suficientes problemas con mi ex-esposa.^Tómala, @. Clávala en tu tierra como un espantapájaros. Protegerá tus cultivos de los cuervos y, sospecho, también los regará. La magia parece tener una cualidad nutritiva debajo de su apariencia marcial.^Trátala con respeto, y quizás el espíritu que habita en ella te conceda su bendición.^- M. Rasmodius%item id (BC)ExcaliburScarecrow_Excalibur 1 %%[#]Un regalo del Mago",
 
   /*********
-    ** Generic Mod Config Menu
-    *********/
+  ** Generic Mod Config Menu
+  *********/
 
   "config.title": "Ajustes de Excalibur Scarecrow",
 
@@ -25,17 +25,8 @@
   "config.sprite-index.tooltip": "Sprite utilizado por la espada.",
 
   "config.wave-speed.name": "Intervalo entre Olas",
-  "config.wave-speed.tooltip": "Segundos entre cada ola de regado."
+  "config.wave-speed.tooltip": "Segundos entre cada ola de regado.",
 
-  //"config.title": "Excalibur Scarecrow",
-
-  //"config.water-radius.name": "Water Radius",
-  //"config.water-radius.tooltip": "Tiles affected around the Excalibur. Default {{defaultValue}}.",
-
-  //"config.sprite.name": "Sword Appearance",
-  //"config.sprite.tooltip": "Select the sprite used by the Excalibur.",
-
-  //"config.wave-speed.name": "Wave Speed",
-  //"config.wave-speed.tooltip": "Seconds between each watering wave.",
-
+  "config.particles-always-active.name": "Animación de partículas permanente",
+  "config.particles-always-active.tooltip": "Determina si las partículas mágicas de Excalibur permanecen animadas continuamente en lugar de aparecer sólo durante el regado."
 }

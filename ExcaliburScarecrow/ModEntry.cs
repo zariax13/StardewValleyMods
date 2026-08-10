@@ -32,6 +32,9 @@ internal sealed class ModEntry : Mod
         helper.Events.GameLoop.DayStarted += OnDayStarted;
         helper.Events.Player.Warped += OnWarped;
         helper.Events.GameLoop.UpdateTicked += OnUpdateTicked;
+
+        // Renderizado de partículas personalizadas
+        helper.Events.Display.RenderedWorld += OnRenderedWorld;
     }
 
     private void SaveConfig()
@@ -97,38 +100,6 @@ internal sealed class ModEntry : Mod
             return;
         }
 
-        // 1. Modificar Data/BigCraftables con nuestro objeto personalizado, el SpriteIndex activo y el Radio dinámico
-        //if (e.NameWithoutLocale.IsEquivalentTo(ModConstants.GameBigCraftables))
-        //{
-        //    e.Edit(asset =>
-        //    {
-        //        var data = asset.AsDictionary<string, BigCraftableData>().Data;
-
-        //        // temporal log
-        //        Monitor.Log(
-        //    $"Registrando Excalibur: {data.ContainsKey(ModConstants.SwordItemId)}",
-        //    LogLevel.Info);
-
-        //        var customData = Helper.ModContent.Load<Dictionary<string, BigCraftableData>>(ModConstants.BigCraftablesJsonPath);
-
-        //        foreach (var kvp in customData)
-        //        {
-        //            kvp.Value.SpriteIndex = config.SpriteIndex;
-
-        //            // Actualizar dinámicamente los tags de radio de espantapájaros y regado
-        //            if (kvp.Value.ContextTags != null)
-        //            {
-        //                kvp.Value.ContextTags.RemoveAll(tag => tag.StartsWith("crow_scare_radius_") || tag.StartsWith("ss_water_radius_"));
-        //                kvp.Value.ContextTags.Add($"crow_scare_radius_{config.WaterRadius}");
-        //                kvp.Value.ContextTags.Add($"ss_water_radius_{config.WaterRadius}");
-        //            }
-
-        //            data[kvp.Key] = kvp.Value;
-        //        }
-        //    });
-        //    return;
-        //}
-
         // 2. Modificar Data/Mail con nuestra carta de introducción
         if (e.NameWithoutLocale.IsEquivalentTo(ModConstants.GameMail))
         {
@@ -178,7 +149,17 @@ internal sealed class ModEntry : Mod
 
     private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
     {
+        if (!Context.IsWorldReady)
+            return;
+
         // Avanzar fotograma / olas de animación
         swordWaterer.OnUpdateTicked();
+    }
+
+    private void OnRenderedWorld(
+    object? sender,
+    RenderedWorldEventArgs e)
+    {
+        swordWaterer.DrawParticles(e.SpriteBatch);
     }
 }

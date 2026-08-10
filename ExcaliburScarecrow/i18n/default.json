@@ -1,20 +1,20 @@
 {
   /*********
-    ** Item
-    *********/
+  ** Item
+  *********/
 
   "item.name": "Excalibur",
   "item.description": "A legendary sword embedded in the ground. It protects nearby crops and waters them every morning.",
 
   /*********
-    ** Mail
-    *********/
+  ** Mail
+  *********/
 
-  "mail.intro": "Greetings, @.^I discovered a legendary sword embedded in the earth. It seems to possess mysterious power... Perhaps it will protect your crops better than an ordinary scarecrow.^Take good care of it.^- An unknown traveler%item id (BC)ExcaliburScarecrow_Excalibur 1 %%[#]A forgotten legend",
+  "mail.intro": "Greetings, @.^I'm writing because I've made a rather... peculiar discovery in the mines.^It's a sword. But not just any sword. This one hums with ancient magic that even I, after all my years of study, cannot fully decipher. The blade resonates with the echo of a forgotten hero's spirit, waiting to be awakened.^I would keep it in my tower, but the magical energy there is already dangerously unstable. I fear the sword's presence might inadvertently summon something... or someone. The last thing I need is a heroic spirit materializing in my study demanding a Holy Grail. I already have enough problems with my ex-wife.^Take it, @. Plant it in your soil like a scarecrow. It will protect your crops from crows and, I suspect, water them as well. The magic seems to have a nurturing quality beneath its martial exterior.^Treat it with respect, and perhaps the spirit within will grant you its blessing.^- M. Rasmodius%item id (BC)ExcaliburScarecrow_Excalibur 1 %%[#]A gift from the Wizard",
 
   /*********
-    ** Generic Mod Config Menu
-    *********/
+  ** Generic Mod Config Menu
+  *********/
 
   "config.title": "Excalibur Scarecrow Settings",
 
@@ -25,16 +25,9 @@
   "config.sprite-index.tooltip": "The sprite used by the sword.",
 
   "config.wave-speed.name": "Interval between Waves",
-  "config.wave-speed.tooltip": "Seconds between each watering wave."
+  "config.wave-speed.tooltip": "Seconds between each watering wave.",
 
-  //"config.title": "Excalibur Scarecrow",
+  "config.particles-always-active.name": "Permanent Particle Animation",
+  "config.particles-always-active.tooltip": "Whether the Excalibur's magical particles should remain animated continuously instead of only appearing during watering."
 
-  //"config.water-radius.name": "Water Radius",
-  //"config.water-radius.tooltip": "Tiles affected around the Excalibur. Default {{defaultValue}}.",
-
-  //"config.sprite.name": "Sword Appearance",
-  //"config.sprite.tooltip": "Select the sprite used by the Excalibur.",
-
-  //"config.wave-speed.name": "Wave Speed",
-  //"config.wave-speed.tooltip": "Seconds between each watering wave."
 }

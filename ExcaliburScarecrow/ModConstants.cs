@@ -19,4 +19,10 @@ internal static class ModConstants
     // Custom texture asset
     public const string TextureAssetKey = "Mods/ExcaliburScarecrow/bigcraftables";
     public const string TextureFilePath = "assets/bigcraftables.png";
+
+    // Particle spritesheet
+    public const int ParticleFrameWidth = 16;
+    public const int ParticleFrameHeight = 32;
+    public const int ParticleFrameCount = 18;
+    public const int ParticleRow = 1;
 }

@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -30,6 +31,31 @@ internal sealed class SwordWaterer
     /// Animaciones de olas en curso.
     /// </summary>
     private readonly List<WaveAnimationState> activeAnimations = new();
+
+    // ============================================================
+    // PARTICLES
+    // ============================================================
+
+    /// <summary>
+    /// Frame actual de la animación de partículas.
+    /// </summary>
+    private int particleFrame;
+
+    /// <summary>
+    /// Tick acumulado para cambiar de frame.
+    /// </summary>
+    private int particleFrameTicks;
+
+    /// <summary>
+    /// Indica si las partículas están actualmente activas
+    /// debido a una animación de regado.
+    /// </summary>
+    private bool particlesActiveFromWatering;
+
+    /// <summary>
+    /// Número de ticks entre frames de partículas.
+    /// </summary>
+    private const int ParticleFrameIntervalTicks = 6;
 
     public SwordWaterer(IMonitor monitor, ModConfig config)
     {
@@ -136,14 +162,28 @@ internal sealed class SwordWaterer
 
         animatedLocationsToday.Add(locName);
 
+        // Activar partículas mientras duren las olas.
+        particlesActiveFromWatering = true;
+
         foreach (var sword in swords)
         {
-            int radius = GetSwordRadius(sword);
-            var ringGroups = GroupTilesByRadiusRing(location, sword.TileLocation, radius);
+            int radius =
+                GetSwordRadius(sword);
+
+            var ringGroups =
+                GroupTilesByRadiusRing(
+                    location,
+                    sword.TileLocation,
+                    radius);
 
             if (ringGroups.Count > 0)
             {
-                activeAnimations.Add(new WaveAnimationState(location, sword.TileLocation, ringGroups, WaveIntervalTicks));
+                activeAnimations.Add(
+                    new WaveAnimationState(
+                        location,
+                        sword.TileLocation,
+                        ringGroups,
+                        WaveIntervalTicks));
             }
         }
 
@@ -158,24 +198,160 @@ internal sealed class SwordWaterer
     /// </summary>
     public void OnUpdateTicked()
     {
-        if (activeAnimations.Count == 0)
-            return;
+        // ========================================================
+        // PARTICLES
+        // ========================================================
 
-        for (int i = activeAnimations.Count - 1; i >= 0; i--)
+        bool particlesShouldRun =
+            config.ParticlesAlwaysActive ||
+            particlesActiveFromWatering;
+
+        if (particlesShouldRun)
         {
-            var anim = activeAnimations[i];
+            particleFrameTicks++;
+
+            if (particleFrameTicks >= ParticleFrameIntervalTicks)
+            {
+                particleFrameTicks = 0;
+
+                particleFrame++;
+
+                if (particleFrame >=
+                    ModConstants.ParticleFrameCount)
+                {
+                    particleFrame = 0;
+                }
+            }
+        }
+        else
+        {
+            particleFrame = 0;
+            particleFrameTicks = 0;
+        }
+
+        // ========================================================
+        // WATERING WAVES
+        // ========================================================
+
+        if (activeAnimations.Count == 0)
+        {
+            if (!config.ParticlesAlwaysActive)
+                particlesActiveFromWatering = false;
+
+            return;
+        }
+
+        for (int i = activeAnimations.Count - 1;
+             i >= 0;
+             i--)
+        {
+            var anim =
+                activeAnimations[i];
+
             anim.TicksSinceLastWave++;
 
-            if (anim.TicksSinceLastWave >= WaveIntervalTicks)
+            if (anim.TicksSinceLastWave >=
+                WaveIntervalTicks)
             {
                 anim.TicksSinceLastWave = 0;
-                bool hasMoreRings = anim.TriggerNextWave();
+
+                bool hasMoreRings =
+                    anim.TriggerNextWave();
 
                 if (!hasMoreRings)
                 {
                     activeAnimations.RemoveAt(i);
                 }
             }
+        }
+
+        if (activeAnimations.Count == 0 &&
+            !config.ParticlesAlwaysActive)
+        {
+            particlesActiveFromWatering = false;
+        }
+
+        //if (activeAnimations.Count == 0)
+        //    return;
+
+        //for (int i = activeAnimations.Count - 1; i >= 0; i--)
+        //{
+        //    var anim = activeAnimations[i];
+        //    anim.TicksSinceLastWave++;
+
+        //    if (anim.TicksSinceLastWave >= WaveIntervalTicks)
+        //    {
+        //        anim.TicksSinceLastWave = 0;
+        //        bool hasMoreRings = anim.TriggerNextWave();
+
+        //        if (!hasMoreRings)
+        //        {
+        //            activeAnimations.RemoveAt(i);
+        //        }
+        //    }
+        //}
+    }
+
+    /// <summary>
+    /// Dibuja el frame actual de partículas sobre las espadas.
+    /// </summary>
+    public void DrawParticles(SpriteBatch spriteBatch)
+    {
+        if (!Context.IsWorldReady)
+            return;
+
+        bool particlesShouldRun =
+            config.ParticlesAlwaysActive ||
+            particlesActiveFromWatering;
+
+        if (!particlesShouldRun)
+            return;
+
+        GameLocation location =
+            Game1.currentLocation;
+
+        if (location == null)
+            return;
+
+        Texture2D texture =
+            Game1.content.Load<Texture2D>(
+                ModConstants.TextureAssetKey);
+
+        Rectangle sourceRectangle =
+            new Rectangle(
+                particleFrame *
+                    ModConstants.ParticleFrameWidth,
+
+                ModConstants.ParticleRow *
+                    ModConstants.ParticleFrameHeight,
+
+                ModConstants.ParticleFrameWidth,
+
+                ModConstants.ParticleFrameHeight);
+
+        foreach (var sword in
+                 GetPlacedSwords(location))
+        {
+            Vector2 screenPosition =
+                Game1.GlobalToLocal(
+                    Game1.viewport,
+                    sword.TileLocation * 64f);
+
+            // Ajuste vertical para que la partícula
+            // aparezca sobre la espada.
+            //screenPosition.Y -= 32f; <- error, muy abajo
+            screenPosition += new Vector2(0f, -64f);
+
+            spriteBatch.Draw(
+                texture,
+                screenPosition,
+                sourceRectangle,
+                Color.White,
+                0f,
+                Vector2.Zero,
+                4f,
+                SpriteEffects.None,
+                0.001f);
         }
     }
 
@@ -210,20 +386,6 @@ internal sealed class SwordWaterer
     public int GetSwordRadius(StardewValley.Object sword)
     {
         return config.WaterRadius;
-
-        //if (sword == null)
-        //    return config.WaterRadius;
-
-        //foreach (string tag in sword.GetContextTags())
-        //{
-        //    Match match = Regex.Match(tag, @"(?:crow_scare_radius_|ss_water_radius_)(\d+)");
-        //    if (match.Success && int.TryParse(match.Groups[1].Value, out int radius))
-        //    {
-        //        return radius;
-        //    }
-        //}
-
-        //return config.WaterRadius;
     }
 
     /// <summary>
@@ -360,6 +522,30 @@ internal sealed class SwordWaterer
                 return false;
 
             Vector2 swordPixelPos = SwordTile * 64f;
+
+            // ====================================================
+            // EFECTOS SOBRE LA ESPADA
+            // ====================================================
+
+            Location.temporarySprites.Add(
+                new TemporaryAnimatedSprite(
+                    10,
+                    swordPixelPos +
+                        new Vector2(8f, -16f),
+                    Color.White,
+                    8,
+                    false,
+                    40f));
+
+            Location.temporarySprites.Add(
+                new TemporaryAnimatedSprite(
+                    10,
+                    swordPixelPos +
+                        new Vector2(-8f, 16f),
+                    Color.Cyan,
+                    8,
+                    false,
+                    40f));
 
             // =========================================================================================
             // OPCIONES DE ANIMACIÓN EN LA ESPADA (Descomenta la opción que desees probar para tu espada)
